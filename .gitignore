@@ -1,0 +1,7 @@
+backend/node_modules
+smartstocks/node_modules
+.env
+backend/.env
+smartstocks/.env
+.DS_Store
+npm-debug.log

@@ -1,0 +1,90 @@
+.product-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.product-form-card {
+  width: 420px;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.product-form-card h2 {
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* message boxes */
+.success-box, .error-box {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.success-box {
+  background: #d4f8d4;
+  color: #0a7a0a;
+  border-left: 4px solid #0a7a0a;
+}
+
+.error-box {
+  background: #ffdada;
+  color: #c40000;
+  border-left: 4px solid #c40000;
+}
+
+/* inputs */
+.product-form-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #505b75;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.product-form-card input::placeholder {
+  color: var(--placeholder-color);
+}
+
+/* Submit button */
+.form-btn {
+  width: 100%;
+  padding: 13px;
+  background: #2f6bff;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-btn:hover {
+  background: #1e4fd4;
+}
+
+/* Theme Variables */
+:root {
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  --text-primary: #000;
+  --placeholder-color: #555;
+}
+
+.dark-mode {
+  --card-bg: #1d2639;
+  --input-bg: #2a3347;
+  --text-primary: #f0f0f0;
+  --placeholder-color: #c5c5c5;
+}
