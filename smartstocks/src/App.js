@@ -8,14 +8,13 @@ import { ThemeProvider } from "./context/ThemeContext";
 
 // Pages
 import Dashboard from "./pages/Dashboard";
-import Inventory from "./pages/Inventory";
 import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
-import Sales from "./pages/Sales";
 import Predictions from "./pages/Predictions";
 import Login from "./pages/Login";
 import ChatbotWidget from "./components/ChatbotWidget";
+import Alerts from "./pages/Alerts";
 
 
 function App() {
@@ -51,12 +50,11 @@ function App() {
                 {isLoggedIn ? (
                   <>
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/inventory" element={<Inventory />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/add-product" element={<AddProduct />} />
                     <Route path="/edit-product/:id" element={<EditProduct />} />
-                    <Route path="/sales" element={<Sales />} />
                     <Route path="/predictions" element={<Predictions />} />
+                    <Route path="/alerts" element={<Alerts />} />
                   </>
                 ) : (
                   // Redirect any other routes to login if not logged in

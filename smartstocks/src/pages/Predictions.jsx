@@ -1,121 +1,100 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { ThemeContext } from "../context/ThemeContext";
-
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
+  LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer
 } from "recharts";
 
-const Predictions = () => {
-  const { theme } = useContext(ThemeContext);
+const defaultData = [
+  { date: "Mon", actual: 120, predicted: 110 },
+  { date: "Tue", actual: 150, predicted: 140 },
+  { date: "Wed", actual: 170, predicted: 160 },
+  { date: "Thu", actual: 110, predicted: 130 },
+  { date: "Fri", actual: 200, predicted: 190 }
+];
 
+export default function Predictions() {
+  const { theme } = useContext(ThemeContext);
   const [productName, setProductName] = useState("");
+  const [data, setData] = useState(defaultData);
   const [prediction, setPrediction] = useState([]);
-  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // if backend provides /api/predict (summary) we can fetch it
+    // otherwise defaultData will be shown
+    (async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/predict");
+        if (res.data) setData(res.data);
+      } catch (e) {
+        // ignore if not available
+      }
+    })();
+  }, []);
 
   const getPrediction = async () => {
-    if (!productName.trim()) {
-      alert("Enter a product name!");
-      return;
-    }
-
-    setLoading(true);
-    setPrediction([]);
-
+    if (!productName.trim()) return alert("Enter product name");
     try {
-      const res = await axios.post("http://localhost:5000/predict", {
-        product: productName,
-      });
-
-      // Expected Format:
-      // res.data.prediction = [
-      //   { day: "Mon", demand: 20 },
-      //   { day: "Tue", demand: 25 },
-      // ]
+      const res = await axios.post("http://localhost:5000/predict", { product: productName });
       if (Array.isArray(res.data.prediction)) {
         setPrediction(res.data.prediction);
       } else {
-        alert("Invalid prediction data received!");
+        alert("Invalid prediction result");
       }
-
-    } catch (error) {
-      alert("Error fetching prediction");
-      console.error("Prediction Error:", error);
+    } catch (e) {
+      alert("Prediction failed");
     }
-
-    setLoading(false);
   };
 
   return (
-    <div
-      className={`p-6 min-h-screen transition ${
-        theme === "dark"
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
-    >
-      <h1 className="text-3xl font-bold mb-6">Sales Predictions</h1>
+    <div className={`p-6 ${theme === "dark" ? "bg-gray-900 text-white" : ""}`}>
+      <h1 className="text-3xl font-bold mb-4">Predictions</h1>
 
-      <div
-        className={`max-w-xl p-6 rounded-xl shadow-md transition ${
-          theme === "dark" ? "bg-gray-800" : "bg-white"
-        }`}
-      >
-        {/* Input */}
-        <label className="font-semibold text-lg">Product Name</label>
-
-        <input
-          type="text"
-          placeholder="Enter a product (Ex: Milk 1L)"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          className={`w-full mt-2 p-3 rounded-lg border outline-none transition ${
-            theme === "dark"
-              ? "bg-gray-700 text-white border-gray-600"
-              : "bg-gray-200 text-gray-900 border-gray-300"
-          }`}
-        />
-
-        {/* Button */}
-        <button
-          onClick={getPrediction}
-          className="mt-4 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-        >
-          {loading ? "Predicting..." : "Get Prediction"}
-        </button>
-
-        {/* Chart */}
-        {prediction.length > 0 && (
-          <div className="mt-6 p-4 rounded-lg bg-green-100 text-green-900">
-            <p className="font-semibold text-xl mb-4">📈 Predicted Demand</p>
-
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={prediction}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow">
+          <h2 className="font-semibold mb-3">Actual vs Predicted (overview)</h2>
+          <div style={{ width: "100%", height: 260 }}>
+            <ResponsiveContainer>
+              <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
+                <XAxis dataKey="date" />
                 <YAxis />
                 <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="demand"
-                  stroke="#4ade80"
-                  strokeWidth={3}
-                />
+                <Line type="monotone" dataKey="actual" stroke="#06b6d4" strokeWidth={2} />
+                <Line type="monotone" dataKey="predicted" stroke="#f97316" strokeWidth={2} strokeDasharray="4 4" />
               </LineChart>
             </ResponsiveContainer>
           </div>
-        )}
+        </div>
+
+        <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow">
+          <h2 className="font-semibold mb-3">Predict for a Product</h2>
+          <input
+            className="w-full p-3 rounded border mb-3 bg-white dark:bg-gray-700"
+            placeholder="Product name (ex: Milk 1L)"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+          />
+          <button onClick={getPrediction} className="bg-blue-600 text-white px-4 py-2 rounded">Get Prediction</button>
+
+          {prediction.length > 0 && (
+            <div className="mt-4">
+              <h3 className="font-semibold mb-2">Prediction (next days)</h3>
+              <div style={{ width: "100%", height: 220 }}>
+                <ResponsiveContainer>
+                  <LineChart data={prediction}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="demand" stroke="#4ade80" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
-};
-
-export default Predictions;
+}
