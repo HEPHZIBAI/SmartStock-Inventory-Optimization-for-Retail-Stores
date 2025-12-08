@@ -23,7 +23,6 @@ export default function Sidebar() {
         <LinkItem to="/dashboard">Dashboard</LinkItem>
         <LinkItem to="/products">Products</LinkItem>
         <LinkItem to="/predictions">Predictions</LinkItem>
-        <LinkItem to="/alerts">Alerts</LinkItem>
       </nav>
     </aside>
   );
