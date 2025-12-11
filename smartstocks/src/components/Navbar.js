@@ -1,60 +1,40 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
-import { Link } from "react-router-dom";
-import { FiSun, FiMoon } from "react-icons/fi";
+import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
-export default function Navbar() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+const Navbar = ({ setSidebarOpen, onLogout }) => {
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="w-full bg-gray-100 dark:bg-gray-800 border-b dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <button className="text-xl font-bold text-gray-800 dark:text-white">
-            SmartStock
-          </button>
-          <nav className="hidden md:flex gap-3 text-sm">
-            <Link
-              to="/dashboard"
-              className="text-gray-600 dark:text-gray-200 hover:underline"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/products"
-              className="text-gray-600 dark:text-gray-200 hover:underline"
-            >
-              Products
-            </Link>
-            <Link
-              to="/predictions"
-              className="text-gray-600 dark:text-gray-200 hover:underline"
-            >
-              Predictions
-            </Link>
-            <Link
-              to="/alerts"
-              className="text-gray-600 dark:text-gray-200 hover:underline"
-            >
-              Alerts
-            </Link>
-          </nav>
-        </div>
+    <nav className="flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 shadow">
+      
+      {/* Sidebar Toggle */}
+      <button
+        onClick={() => setSidebarOpen(prev => !prev)}
+        className="text-xl"
+      >
+        ☰
+      </button>
 
-        <div className="flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="px-3 py-1 border rounded-md bg-white dark:bg-gray-700 text-sm flex items-center gap-1"
-            title="Toggle theme"
-          >
-            {theme === "dark" ? <FiSun /> : <FiMoon />}
-            {theme === "dark" ? "Light" : "Dark"}
-          </button>
-          <div className="hidden sm:block text-sm text-gray-600 dark:text-gray-300">
-            Admin
-          </div>
-        </div>
+      <div className="flex items-center gap-4">
+
+        {/* Theme Switch */}
+        <button 
+          onClick={toggleTheme}
+          className="px-3 py-1 bg-blue-600 text-white rounded"
+        >
+          {theme === "dark" ? "Light" : "Dark"}
+        </button>
+
+        {/* Logout */}
+        <button
+          onClick={onLogout}   // 🔥 this works now
+          className="px-3 py-1 bg-red-600 text-white rounded"
+        >
+          Logout
+        </button>
       </div>
-    </header>
+    </nav>
   );
-}
+};
+
+export default Navbar;

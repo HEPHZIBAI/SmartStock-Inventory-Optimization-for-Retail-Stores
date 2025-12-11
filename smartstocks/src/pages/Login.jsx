@@ -1,33 +1,56 @@
-// Login.jsx
-import React from "react";
+import React, { useState } from "react";
 
 function Login({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can add real authentication logic here
-    onLogin(); // Set isLoggedIn to true
+
+    // REAL LOGIN CHECK
+    if (email === "admin@gmail.com" && password === "admin") {
+      onLogin();
+    } else {
+      setErr("Invalid username or password");
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form 
-        className="bg-white dark:bg-gray-800 p-8 rounded shadow-md w-full max-w-sm"
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <form
+        className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl w-full max-w-sm"
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl mb-6 text-center">Login</h2>
-        <input 
-          type="text" 
-          placeholder="Username" 
-          className="w-full mb-4 p-2 border rounded"
+        <h2 className="text-3xl mb-6 text-center font-semibold text-gray-800 dark:text-gray-200">
+          SmartStock Login
+        </h2>
+
+        {err && (
+          <p className="mb-4 text-red-500 text-sm text-center">
+            {err}
+          </p>
+        )}
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full mb-4 p-3 border dark:border-gray-600 bg-gray-100 dark:bg-gray-700 rounded focus:outline-none"
         />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          className="w-full mb-4 p-2 border rounded"
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full mb-6 p-3 border dark:border-gray-600 bg-gray-100 dark:bg-gray-700 rounded focus:outline-none"
         />
-        <button 
-          type="submit" 
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
         >
           Login
         </button>

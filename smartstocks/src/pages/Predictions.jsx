@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+// src/pages/Predictions.jsx
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { ThemeContext } from "../context/ThemeContext";
-import {
-  LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 
 const defaultData = [
   { date: "Mon", actual: 120, predicted: 110 },
@@ -16,46 +15,36 @@ const defaultData = [
 export default function Predictions() {
   const { theme } = useContext(ThemeContext);
   const [productName, setProductName] = useState("");
-  const [data, setData] = useState(defaultData);
+  const [overview, setOverview] = useState(defaultData);
   const [prediction, setPrediction] = useState([]);
 
   useEffect(() => {
-    // if backend provides /api/predict (summary) we can fetch it
-    // otherwise defaultData will be shown
-    (async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/predict");
-        if (res.data) setData(res.data);
-      } catch (e) {
-        // ignore if not available
-      }
-    })();
+    axios.get("http://localhost:5000/api/predict")
+      .then((res) => { if (res.data) setOverview(res.data); })
+      .catch(() => setOverview(defaultData));
   }, []);
 
   const getPrediction = async () => {
     if (!productName.trim()) return alert("Enter product name");
     try {
       const res = await axios.post("http://localhost:5000/predict", { product: productName });
-      if (Array.isArray(res.data.prediction)) {
-        setPrediction(res.data.prediction);
-      } else {
-        alert("Invalid prediction result");
-      }
+      if (Array.isArray(res.data.prediction)) setPrediction(res.data.prediction);
+      else alert("Invalid prediction result");
     } catch (e) {
       alert("Prediction failed");
     }
   };
 
   return (
-    <div className={`p-6 ${theme === "dark" ? "bg-gray-900 text-white" : ""}`}>
+    <div className={`p-6 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-3xl font-bold mb-4">Predictions</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="p-4 rounded-lg bg-white dark:bg-gray-800 shadow">
           <h2 className="font-semibold mb-3">Actual vs Predicted (overview)</h2>
-          <div style={{ width: "100%", height: 260 }}>
+          <div style={{ width: "100%", height: 300 }}>
             <ResponsiveContainer>
-              <LineChart data={data}>
+              <LineChart data={overview}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />

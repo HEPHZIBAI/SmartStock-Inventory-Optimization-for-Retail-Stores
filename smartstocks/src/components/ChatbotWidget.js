@@ -40,7 +40,7 @@ export default function ChatbotWidget() {
 
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-96 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-xl shadow-lg overflow-hidden">
-          <div className="px-4 py-3 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+          <div className="px-4 py-3 border-b dark:border-gray-700 bg-gray-500 dark:bg-gray-900 text-white">
             <strong>SmartStock Assistant</strong>
           </div>
 

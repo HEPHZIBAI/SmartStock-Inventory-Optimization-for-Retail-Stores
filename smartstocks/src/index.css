@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html { scroll-behavior: smooth; }
+
+input, textarea {
+  @apply transition-colors duration-150;
+}
+
+::placeholder {
+  opacity: 0.8;
+}
+
+.menu-item {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  color: #555;
+  font-weight: 500;
+}
+
+.menu-item.active {
+  background-color: #5b3fff;
+  color: white;
+}
+
+.menu-item:hover {
+  background-color: #eee;
+}

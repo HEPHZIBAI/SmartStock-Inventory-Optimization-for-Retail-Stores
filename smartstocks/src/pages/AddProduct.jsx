@@ -1,82 +1,114 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../styles/product-form.css";
+import { useNavigate } from "react-router-dom";
+import { FiPackage, FiTag, FiHash, FiShoppingCart } from "react-icons/fi";
 
 const AddProduct = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [category, setCategory] = useState("");
+  const navigate = useNavigate();
 
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    category: "",
+    quantity: "",
+    price: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  
+  const validate = () => {
+    let temp = {};
+
+    if (!form.name.trim()) temp.name = "Product name is required";
+    if (!form.price) temp.price = "Price is required";
+    if (!form.quantity) temp.quantity = "Quantity is required";
+    if (!form.category.trim()) temp.category = "Category is required";
+
+    setErrors(temp);
+    return Object.keys(temp).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setError("");
-    setSuccess("");
+    if (!validate()) return;
 
     try {
-      const res = await axios.post("http://localhost:5000/api/products/add", {
-        name,
-        price,
-        quantity,
-        category,
-      });
+      const res = await axios.post("http://localhost:5000/api/products/add", form);
 
       if (res.data.success) {
-        setSuccess("Product added successfully!");
-        setName("");
-        setPrice("");
-        setQuantity("");
-        setCategory("");
+        // Redirect with success message
+        navigate("/products", { state: { showSuccess: true } });
       }
+
     } catch (err) {
-      setError("Error adding product");
+      console.error(err);
+      setErrors({ api: "❌ Failed to add product." });
     }
   };
 
   return (
-    <div className="product-form-wrapper">
-      <div className="product-form-card">
-        <h2>Add Product</h2>
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border">
+      <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+        <FiPackage /> Add New Product
+      </h2>
 
-        {success && <div className="success-box">{success}</div>}
-        {error && <div className="error-box">{error}</div>}
+      {errors.api && <p className="mb-4 p-3 bg-red-100 text-red-700 rounded">{errors.api}</p>}
 
-        <input
-          type="text"
-          placeholder="Product Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      <form className="space-y-5" onSubmit={handleSubmit}>
 
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
+        {/* Name */}
+        <div>
+          <label className="flex gap-2 mb-1 text-gray-700 dark:text-gray-300"><FiTag /> Product Name</label>
+          <input
+            className="w-full p-3 rounded border bg-gray-100 dark:bg-gray-700 dark:text-white"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder="Enter product name"
+          />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+        </div>
 
-        <input
-          type="number"
-          placeholder="Quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-        />
+        {/* Category */}
+        <div>
+          <label className="flex gap-2 mb-1 text-gray-700 dark:text-gray-300"><FiHash /> Category</label>
+          <input
+            className="w-full p-3 rounded border bg-gray-100 dark:bg-gray-700 dark:text-white"
+            value={form.category}
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            placeholder="Category"
+          />
+          {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+        </div>
 
-        <input
-          type="text"
-          placeholder="Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
+        {/* Quantity */}
+        <div>
+          <label className="flex gap-2 mb-1 text-gray-700 dark:text-gray-300"><FiShoppingCart /> Quantity</label>
+          <input
+            type="number"
+            className="w-full p-3 rounded border bg-gray-100 dark:bg-gray-700 dark:text-white"
+            value={form.quantity}
+            onChange={(e) => setForm({ ...form, quantity: Number(e.target.value) })}
+            placeholder="0"
+          />
+          {errors.quantity && <p className="text-red-500 text-sm">{errors.quantity}</p>}
+        </div>
 
-        <button className="form-btn" onClick={handleSubmit}>
-          Add Product
+        {/* Price */}
+        <div>
+          <label className="flex gap-2 mb-1 text-gray-700 dark:text-gray-300"><FiTag /> Price (₹)</label>
+          <input
+            type="number"
+            className="w-full p-3 rounded border bg-gray-100 dark:bg-gray-700 dark:text-white"
+            value={form.price}
+            onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+            placeholder="0"
+          />
+          {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
+        </div>
+
+        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold">
+          Save Product
         </button>
-      </div>
+      </form>
     </div>
   );
 };
