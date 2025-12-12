@@ -26,7 +26,7 @@ const MainLayout = ({ onLogout }) => {
         />
 
         {/* Page Content */}
-        <main className="p-4 mt-4">
+        <main className="p-4 mt-4 lg:ml-64">
           <Outlet />
         </main>
       </div>
