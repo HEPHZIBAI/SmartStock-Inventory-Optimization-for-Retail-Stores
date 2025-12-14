@@ -28,3 +28,7 @@ input, textarea {
 .menu-item:hover {
   background-color: #eee;
 }
+/* optional: soft shadow for apple-like cards */
+.shadow-soft {
+  box-shadow: 0 6px 18px rgba(23, 23, 23, 0.06);
+}

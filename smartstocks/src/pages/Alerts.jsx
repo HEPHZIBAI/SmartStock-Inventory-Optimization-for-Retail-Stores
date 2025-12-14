@@ -8,8 +8,8 @@ export default function Alerts() {
   const reorderDefault = 10;
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products")
-      .then((res) => setInventory(res.data || []))
+    axios.get("http://localhost:5000/api/products/all")
+      .then((res) => setInventory(res.data.products || []))
       .catch((err) => {
         console.error("Failed to load products for alerts", err);
         setInventory([]);

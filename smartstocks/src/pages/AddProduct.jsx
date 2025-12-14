@@ -70,12 +70,18 @@ const AddProduct = () => {
         {/* Category */}
         <div>
           <label className="flex gap-2 mb-1 text-gray-700 dark:text-gray-300"><FiHash /> Category</label>
-          <input
-            className="w-full p-3 rounded border bg-gray-100 dark:bg-gray-700 dark:text-white"
+          <select className="w-full p-3 rounded border bg-gray-100 dark:bg-gray-700 dark:text-white"
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
-            placeholder="Category"
-          />
+          >
+            <option value="">Select Category</option>
+            <option value="Groceries">Groceries</option>
+            <option value="Toys">Toys</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Clothing">Clothing</option>
+          </select>
+
           {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
         </div>
 

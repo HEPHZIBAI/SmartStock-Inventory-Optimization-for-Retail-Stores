@@ -60,6 +60,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                to="/alerts" >
             Alerts
           </Link>
+
+          <Link
+            className={`block px-4 py-2 rounded-lg font-medium transition-colors text-gray-700 dark:text-gray-200 hover:bg-gray-200 
+              hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white
+              ${pathname === "/SalesAnalytics" ? "bg-blue-600 text-white dark:bg-blue-500 dark:text-white" : ""} `}
+               to="/SalesAnalytics" >
+            SalesAnalytics
+          </Link>
         </nav>
       </aside>
     </>

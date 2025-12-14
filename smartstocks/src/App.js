@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
-
+import SalesAnalytics from "./pages/SalesAnalytics";
 import MainLayout from "./layouts/MainLayout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -42,6 +42,7 @@ function App() {
               <Route path="predictions" element={<Predictions />} />
               <Route path="alerts" element={<Alerts />} />
               <Route index element={<Navigate to="/dashboard" />} />
+              <Route path="/sales" element={<SalesAnalytics />} />
             </Route>
           )}
 
