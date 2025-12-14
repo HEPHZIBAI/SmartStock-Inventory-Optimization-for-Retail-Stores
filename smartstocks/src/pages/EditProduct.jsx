@@ -8,159 +8,128 @@ const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState({
+    name: "",
+    quantity: 0,
+    price: 0,
+    category: ""
+  });
 
   const [errors, setErrors] = useState({});
   const [successMsg, setSuccessMsg] = useState("");
 
-  // ----------------------------
-  // Load product by ID
-  // ----------------------------
+  const CATEGORIES = ["Groceries", "Toys", "Electronics", "Furniture", "Clothing"];
+
+  // LOAD PRODUCT DATA
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/products/${id}`)
-      .then((res) => setProduct(res.data))
-      .catch(() => {
-        setErrors({ general: "Failed to load product" });
-      });
+      .then((res) => {
+        if (res.data.product) setProduct(res.data.product);
+      })
+      .catch(() => setErrors({ general: "Failed to load product" }));
   }, [id]);
 
-
-  // ----------------------------
-  // Handle input change
-  // ----------------------------
+  // HANDLE INPUT CHANGE
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setProduct({
+      ...product,
+      [name]: name === "price" || name === "quantity" ? Number(value) : value,
+    });
   };
 
-
-  // ----------------------------
-  // Validate fields
-  // ----------------------------
+  // VALIDATION
   const validate = () => {
     let temp = {};
-    if (!product.name) temp.name = "Product name is required";
-    if (!product.price || product.price <= 0)
-      temp.price = "Price must be greater than 0";
-    if (!product.quantity || product.quantity < 0)
-      temp.quantity = "Quantity must be 0 or above";
+    if (!product.name.trim()) temp.name = "Product name is required";
+    if (!product.category) temp.category = "Category is required";
+    if (product.quantity < 0) temp.quantity = "Quantity must be 0 or above";
+    if (product.price <= 0) temp.price = "Price must be greater than 0";
 
     setErrors(temp);
     return Object.keys(temp).length === 0;
   };
 
-
-  // ----------------------------
-  // Submit update
-  // ----------------------------
+  // HANDLE FORM SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
 
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/products/${id}`,
-        product
-      );
-
-      if (res.data.success) {
-        setSuccessMsg("Product updated successfully!");
-
-        setTimeout(() => {
-          navigate("/products", { state: { msg: "updated" } });
-        }, 1500);
-      }
-    } catch (err) {
+      await axios.put(`http://localhost:5000/api/products/${id}`, product);
+      setSuccessMsg("Product updated successfully!");
+      setTimeout(() => navigate("/products"), 1200);
+    } catch {
       setErrors({ general: "Failed to update product" });
     }
   };
 
-
-  if (!product) return <p className="p-6">Loading...</p>;
-
-
   return (
-    <div
-      className={`min-h-screen p-6 ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100"
-      }`}
-    >
-      <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+    <div className={`min-h-screen p-6 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100"}`}>
+      <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+        <h2 className="text-2xl font-bold mb-4">Edit Product ✏️</h2>
 
-        <h2 className="text-2xl font-bold mb-5">Edit Product ✏️</h2>
-
-        {/* GENERAL ERROR */}
-        {errors.general && (
-          <p className="mb-3 text-red-500">{errors.general}</p>
-        )}
-
-        {/* SUCCESS MESSAGE */}
-        {successMsg && (
-          <p className="mb-3 text-green-600 font-medium bg-green-100 p-2 rounded">
-            {successMsg}
-          </p>
-        )}
+        {errors.general && <p className="text-red-500 mb-2">{errors.general}</p>}
+        {successMsg && <p className="text-green-600 bg-green-100 p-2 rounded mb-2">{successMsg}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
-          {/* NAME */}
+          {/* PRODUCT NAME */}
           <div>
+            <label className="block mb-1">Product Name</label>
             <input
-              className="w-full p-3 border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white"
               name="name"
-              placeholder="Enter product name"
-              value={product.name}
+              value={product.name || ""}
               onChange={handleChange}
+              className="w-full p-3 border rounded text-black"
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name}</p>
-            )}
+            {errors.name && <p className="text-red-500">{errors.name}</p>}
           </div>
 
           {/* QUANTITY */}
           <div>
+            <label className="block mb-1">Quantity</label>
             <input
-              className="w-full p-3 border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white"
               name="quantity"
               type="number"
-              placeholder="Quantity"
-              value={product.quantity}
+              value={product.quantity || 0}
               onChange={handleChange}
+              className="w-full p-3 border rounded text-black"
             />
-            {errors.quantity && (
-              <p className="text-red-500 text-sm">{errors.quantity}</p>
-            )}
+            {errors.quantity && <p className="text-red-500">{errors.quantity}</p>}
           </div>
 
           {/* PRICE */}
           <div>
+            <label className="block mb-1">Price (₹)</label>
             <input
-              className="w-full p-3 border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white"
               name="price"
               type="number"
-              placeholder="Price ₹"
-              value={product.price}
+              value={product.price || 0}
               onChange={handleChange}
+              className="w-full p-3 border rounded text-black"
             />
-            {errors.price && (
-              <p className="text-red-500 text-sm">{errors.price}</p>
-            )}
+            {errors.price && <p className="text-red-500">{errors.price}</p>}
           </div>
 
           {/* CATEGORY */}
           <div>
-            <input
-              className="w-full p-3 border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white"
+            <label className="block mb-1">Category</label>
+            <select
               name="category"
-              placeholder="Category (optional)"
-              value={product.category}
+              value={product.category || ""}
               onChange={handleChange}
-            />
+              className="w-full p-3 border rounded text-black"
+            >
+              <option value="">Select Category</option>
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+            {errors.category && <p className="text-red-500">{errors.category}</p>}
           </div>
 
-          {/* BUTTONS */}
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
             Update Product
           </button>
         </form>
