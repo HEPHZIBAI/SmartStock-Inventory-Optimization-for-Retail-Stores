@@ -68,3 +68,24 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
+
+exports.inventoryStatus = async (req, res) => {
+  const products = await Product.find();
+  const sales = await Sale.aggregate([
+    { $group: { _id: "$sku", avgSales: { $avg: "$unitsSold" } } }
+  ]);
+
+  const result = products.map(p => {
+    const s = sales.find(x => x._id === p.sku);
+    const avg = s ? s.avgSales : 0;
+
+    let status = "Balanced";
+    if (p.quantity < p.reorderLevel) status = "Understock";
+    else if (p.quantity > avg * 30) status = "Overstock";
+
+    return { ...p._doc, status };
+  });
+
+  res.json(result);
+};
