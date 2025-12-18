@@ -1,0 +1,22 @@
+[
+  {
+    "_id": { "$oid": "66a111111111111111111111" },
+    "username": "admin@gmail.com",
+    "password": "admin",
+    "role": "admin"
+  },
+  {
+    "_id": { "$oid": "66a222222222222222222222" },
+    "username": "store1@gmail.com",
+    "password": "store1",
+    "role": "manager",
+    "storeId": "STORE_001"
+  },
+  {
+    "_id": { "$oid": "66a333333333333333333333" },
+    "username": "store2@gmail.com",
+    "password": "store2",
+    "role": "manager",
+    "storeId": "STORE_002"
+  }
+]

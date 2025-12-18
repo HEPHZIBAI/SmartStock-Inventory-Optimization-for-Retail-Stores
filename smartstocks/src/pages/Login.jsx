@@ -1,57 +1,91 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function Login({ onLogin }) {
+  const [role, setRole] = useState("admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState("");
+  const [storeId, setStoreId] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+        role,
+        storeId
+      });
 
-    // REAL LOGIN CHECK
-    if (email === "admin@gmail.com" && password === "admin") {
+      localStorage.setItem("role", res.data.role);
+      localStorage.setItem("storeId", res.data.storeId || "");
+
       onLogin();
-    } else {
-      setErr("Invalid username or password");
+    } catch {
+      setError("Invalid credentials");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      <form
-        className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl w-full max-w-sm"
-        onSubmit={handleSubmit}
-      >
-        <h2 className="text-3xl mb-6 text-center font-semibold text-gray-800 dark:text-gray-200">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl w-full max-w-sm">
+
+        <h2 className="text-3xl mb-6 text-center font-semibold">
           SmartStock Login
         </h2>
 
-        {err && (
-          <p className="mb-4 text-red-500 text-sm text-center">
-            {err}
-          </p>
-        )}
+        {error && <p className="text-red-500 text-center">{error}</p>}
+
+        <select
+          className="w-full mb-4 p-3 border rounded"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <option value="admin">Admin</option>
+          <option value="manager">Store Manager</option>
+        </select>
 
         <input
           type="email"
           placeholder="Email"
+          className="w-full mb-4 p-3 border rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 p-3 border dark:border-gray-600 bg-gray-100 dark:bg-gray-700 rounded focus:outline-none"
+          required
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-6 p-3 border dark:border-gray-600 bg-gray-100 dark:bg-gray-700 rounded focus:outline-none"
-        />
+        {/* PASSWORD WITH TOGGLE */}
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full p-3 border rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-3 cursor-pointer text-sm text-blue-600"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </span>
+        </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-        >
+        {role === "manager" && (
+          <input
+            type="text"
+            placeholder="Store ID (CHEN-001)"
+            className="w-full mb-4 p-3 border rounded"
+            value={storeId}
+            onChange={(e) => setStoreId(e.target.value)}
+            required
+          />
+        )}
+
+        <button className="w-full bg-blue-600 text-white py-3 rounded-lg">
           Login
         </button>
       </form>

@@ -1,0 +1,51 @@
+Date,Store ID,Product ID,Category,Region,Inventory Level,Units Sold,Units Ordered,Demand Forecast,Price,Discount,Weather Condition,Holiday/Promotion,Competitor Pricing,Seasonality,sku,city,storeName
+01-01-2022,CHEN-001,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Chennai,Anna Nagar Store
+01-01-2022,CHEN-001,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Chennai,Anna Nagar Store
+01-01-2022,CHEN-001,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Chennai,Anna Nagar Store
+01-01-2022,CHEN-001,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Chennai,Anna Nagar Store
+01-01-2022,CHEN-001,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Chennai,Anna Nagar Store
+01-01-2022,CHEN-002,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Chennai,T Nagar Store
+01-01-2022,CHEN-002,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Chennai,T Nagar Store
+01-01-2022,CHEN-002,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Chennai,T Nagar Store
+01-01-2022,CHEN-002,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Chennai,T Nagar Store
+01-01-2022,CHEN-002,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Chennai,T Nagar Store
+01-01-2022,BANG-001,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Bangalore,Indiranagar Store
+01-01-2022,BANG-001,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Bangalore,Indiranagar Store
+01-01-2022,BANG-001,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Bangalore,Indiranagar Store
+01-01-2022,BANG-001,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Bangalore,Indiranagar Store
+01-01-2022,BANG-001,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Bangalore,Indiranagar Store
+01-01-2022,BANG-002,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Bangalore,Whitefield Store
+01-01-2022,BANG-002,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Bangalore,Whitefield Store
+01-01-2022,BANG-002,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Bangalore,Whitefield Store
+01-01-2022,BANG-002,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Bangalore,Whitefield Store
+01-01-2022,BANG-002,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Bangalore,Whitefield Store
+01-01-2022,HYDE-001,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Hyderabad,Gachibowli Store
+01-01-2022,HYDE-001,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Hyderabad,Gachibowli Store
+01-01-2022,HYDE-001,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Hyderabad,Gachibowli Store
+01-01-2022,HYDE-001,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Hyderabad,Gachibowli Store
+01-01-2022,HYDE-001,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Hyderabad,Gachibowli Store
+01-01-2022,HYDE-002,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Hyderabad,Hitech City Store
+01-01-2022,HYDE-002,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Hyderabad,Hitech City Store
+01-01-2022,HYDE-002,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Hyderabad,Hitech City Store
+01-01-2022,HYDE-002,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Hyderabad,Hitech City Store
+01-01-2022,HYDE-002,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Hyderabad,Hitech City Store
+01-01-2022,MUMB-001,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Mumbai,Borivali Store
+01-01-2022,MUMB-001,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Mumbai,Borivali Store
+01-01-2022,MUMB-001,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Mumbai,Borivali Store
+01-01-2022,MUMB-001,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Mumbai,Borivali Store
+01-01-2022,MUMB-001,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Mumbai,Borivali Store
+01-01-2022,MUMB-002,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Mumbai,Andheri Store
+01-01-2022,MUMB-002,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Mumbai,Andheri Store
+01-01-2022,MUMB-002,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Mumbai,Andheri Store
+01-01-2022,MUMB-002,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Mumbai,Andheri Store
+01-01-2022,MUMB-002,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Mumbai,Andheri Store
+01-01-2022,DELH-001,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Delhi,Karol Bagh Store
+01-01-2022,DELH-001,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Delhi,Karol Bagh Store
+01-01-2022,DELH-001,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Delhi,Karol Bagh Store
+01-01-2022,DELH-001,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Delhi,Karol Bagh Store
+01-01-2022,DELH-001,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Delhi,Karol Bagh Store
+01-01-2022,DELH-002,P0001,Groceries,North,200,120,60,130,35.5,10,Sunny,0,33.725,Autumn,GRO-1001,Delhi,Connaught Place Store
+01-01-2022,DELH-002,P0002,Toys,North,200,120,60,130,60.0,10,Sunny,0,57.0,Autumn,TOY-1002,Delhi,Connaught Place Store
+01-01-2022,DELH-002,P0003,Electronics,North,200,120,60,130,25000.0,10,Sunny,0,23750.0,Autumn,ELE-1003,Delhi,Connaught Place Store
+01-01-2022,DELH-002,P0004,Furniture,North,200,120,60,130,18000.0,10,Sunny,0,17100.0,Autumn,FUR-1004,Delhi,Connaught Place Store
+01-01-2022,DELH-002,P0005,Clothing,North,200,120,60,130,1200.0,10,Sunny,0,1140.0,Autumn,CLO-1005,Delhi,Connaught Place Store

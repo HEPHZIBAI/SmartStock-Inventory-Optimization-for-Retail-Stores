@@ -1,0 +1,4 @@
+_id,username,password,role,storeId
+66a111111111111111111111,admin@gmail.com,admin,admin,
+66a222222222222222222222,store1@gmail.com,store1,manager,STORE_001
+66a333333333333333333333,store2@gmail.com,store2,manager,STORE_002

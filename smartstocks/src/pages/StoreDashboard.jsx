@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function StoreDashboard() {
+  const storeId = localStorage.getItem("storeId");
+  const role = localStorage.getItem("role");
   const { city } = useParams();
   const [stores, setStores] = useState([]);
 
@@ -19,7 +21,7 @@ export default function StoreDashboard() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-5">{city} Stores</h1>
+      <h1 className="text-2xl font-bold mb-5 text-gray-400">{city} Stores</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {stores.map(store => (

@@ -8,13 +8,21 @@ import {
 export default function Dashboard() {
   const { theme } = useContext(ThemeContext);
   const [products, setProducts] = useState([]);
+  const role = localStorage.getItem("role");
+  const storeId = localStorage.getItem("storeId");
+  const storeName = localStorage.getItem("storeName");
 
   const CATEGORIES = ["Groceries", "Toys", "Electronics", "Furniture", "Clothing"];
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products/all")
-      .then(res => setProducts(res.data.products || []));
-  }, []);
+    axios.get("http://localhost:5000/api/products/all",{
+      params: {
+        role,
+        storeId
+      }
+    })
+    .then(res => setProducts(res.data.products || []));
+  }, [role,storeId]);
 
   const totalProducts = products.length;
   const lowStock = products.filter(p => p.quantity <= (p.reorderLevel ?? 10)).length;
@@ -32,17 +40,21 @@ export default function Dashboard() {
 
   return (
     <div className={`p-6 min-h-screen ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100"}`}>
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        {role === "admin" ? "Admin Dashboard" : `Store Dashboard (${storeName})`}
+      </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow">
           <div>Total Products</div>
           <div className="text-2xl font-bold">{totalProducts}</div>
         </div>
+
         <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow">
           <div>Low Stock</div>
           <div className="text-2xl font-bold text-red-600">{lowStock}</div>
         </div>
+        
         <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow">
           <div>Overstock</div>
           <div className="text-2xl font-bold text-yellow-500">{overstock}</div>
